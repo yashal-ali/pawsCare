@@ -1,3 +1,5 @@
+![image](https://github.com/yashal-ali/pawsCare/assets/96627139/cb146a18-1449-4d50-a5fe-7c398c4f6726)
+
 # PawsCare
 
 PawsCare is a web application designed to revolutionize veterinary care by providing quick and reliable answers to pet-related queries. The application uses a chat interface to allow users to ask questions and receive responses from an AI-powered backend. The application is designed with a clean, modern interface and includes both light and dark themes.

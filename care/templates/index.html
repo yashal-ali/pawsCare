@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsCare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        
+        body {
+            color: #121212;
+            font-family: 'Ubuntu', sans-serif;
+            transition: all 0.3s;
+            background: url('https://cdn.pixabay.com/photo/2018/10/01/09/21/pets-3715733_640.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+    position: relative;
+    text-align: center;
+    justify-content: end;
+    padding: 50px 15px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin-top: 127px;
+}
+        .title {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        .input-box {
+            background-color: #FFFFFF;
+            border: none;
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            color: #121212;
+            font-size: 16px;
+            resize: none;
+            display: block;
+            margin: 0 auto 20px auto;
+            transition: all 0.3s;
+        }
+        .input-box::placeholder {
+            color: #9e9e9e;
+        }
+        .input-box:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .optimize-btn {
+    background-color: black;
+    border: none;
+    border-radius: 11px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.3s;
+    color: white;
+    min-width: 120px;
+}
+        .response-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            transition: all 0.3s;
+        }
+        #loader {
+            display: none;
+        }
+        .theme-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+        .theme-icon {
+            color: #121212;
+            font-size: 24px;
+        }
+        .chat-message {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .user-message {
+            background-color: #DCF8C6;
+            border-radius: 16px;
+            padding: 10px 20px;
+            display: inline-block;
+            max-width: 80%;
+            margin-top: 20px;
+        }
+        .bot-message {
+    background-color: #C9C9C9;
+    border-radius: 16px;
+    padding: 10px 20px;
+    display: inline-block;
+    max-width: 80%;
+    float: right;
+    margin-top: 10px;
+}
+        
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">PawsCare</div>
+        <p>Join us in our journey to revolutionize veterinary care and ensure that no animal suffers due to a lack of timely assistance. With PawsCare, help is just a click away.</p>
+        <div id="chatBox"></div>
+        <textarea class="input-box" placeholder="Enter your Query" id="promptInput"></textarea>
+        <div class="mb-5 text-end">                    
+            <button class="btn btn-md btn-info me-3 ps-4 pe-4 optimize-btn" onclick="optimizePrompt()"><b>Ask</b></button>
+        </div>
+        <div id="loader">
+            <div class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="response-card text-start" id="responseCard"></div>
+    </div>
+    <div class="theme-switcher" onclick="toggleTheme()">
+        <i class="fas fa-adjust theme-icon"></i>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script>
+        function toggleTheme() {
+            var body = document.body;
+            body.classList.toggle('light-theme');
+            body.classList.toggle('dark-theme');
+            var themeIcon = document.querySelector('.theme-icon');
+            if (body.classList.contains('light-theme')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                body.style.backgroundColor = '#121212';
+                body.style.color = '#F4E5CC';
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                body.style.backgroundColor = '#F4E5CC';
+                body.style.color = '#121212';
+            }
+        }
+
+        async function optimizePrompt() {
+            var promptInput = document.getElementById('promptInput').value;
+            var chatBox = document.getElementById('chatBox');
+            var responseCard = document.getElementById('responseCard');
+            var loader = document.getElementById('loader');
+
+            // Display loader while fetching data
+            loader.style.display = 'block';
+            responseCard.style.display = 'none';
+
+            // Show user message in chat
+            chatBox.innerHTML += `
+                <div class="chat-message">
+                    <div class="user-message">${promptInput}</div>
+                </div>
+            `;
+
+            try {
+                const formData = new FormData();
+                formData.append('question', promptInput);
+
+                let resp = await fetch('/get_answer', {
+                    method: 'POST',
+                    body: formData
+                });
+                let data = await resp.json();
+                
+                // Show bot message in chat
+                chatBox.innerHTML += `
+                    <div class="chat-message">
+                        <div class="bot-message">${data.result}</div>
+                    </div>
+                `;
+              
+            } catch (error) {
+                responseCard.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+            loader.style.display = 'none';
+          
+        }
+
+        // Initial theme setup
+        document.body.classList.add('dark-theme');
+    </script>
+</body>
+</html>

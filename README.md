@@ -6,7 +6,7 @@ PawsCare is a web application designed to revolutionize veterinary care by provi
 
 ## Inspiration
 
-The inspiration for PawsCare stemmed from a personal experience with my beloved dog, Max. One midnight, Max fell seriously ill, and the anxiety of finding immediate help made me realize how difficult it is to access veterinary care during late hours. After talking to various pet owners, I discovered that many face the same issue, struggling to find immediate veterinary assistance when their pets fall ill at inconvenient times. Additionally, I learned that cattle farmers often face similar challenges, as veterinary hospitals are not readily accessible in rural areas. These insights reinforced the need for a solution that provides instant veterinary advice and support, ensuring that all pet owners and farmers have access to the care they need, no matter the time or location. This led to the creation of PawsCare.
+These insights reinforced the need for a solution that provides instant veterinary advice and support, ensuring that all pet owners and farmers have access to the care they need, no matter the time or location. This led to the creation of PawsCare.
 
 ## Features
 
